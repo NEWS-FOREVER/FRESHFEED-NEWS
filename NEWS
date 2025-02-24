@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global News</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background: #333; color: white; padding: 15px; text-align: center; }
+        .container { width: 80%; margin: auto; padding: 20px; }
+        .news-card { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .news-card h3 { margin: 0; }
+        .dark-mode { background-color: #1e1e1e; color: white; }
+        .category { margin: 10px; padding: 10px; cursor: pointer; display: inline-block; background: #ddd; border-radius: 5px; }
+        .category:hover { opacity: 0.8; transition: all 0.3s; }
+        .sub-category { display: none; margin-left: 20px; }
+        .active { display: block; }
+        
+        /* Politics & Governance */
+        .politics { background: deepblue; }
+        .politics .category:hover { background: lightblue; }
+        .politics .category.global { background: lightblue; }
+        .politics .category.regional { background: green; }
+        .politics .category.national { background: darkgray; }
+        .politics .category.leaders { background: purple; }
+        .politics .category.parties { background: gold; }
+
+        /* Business & Economy */
+        .business { background: darkgreen; }
+        .business .category:hover { background: lightgreen; }
+        .business .category.economy { background: lightgreen; }
+        .business .category.stock { background: orange; }
+        .business .category.corporate { background: navy; }
+        .business .category.startups { background: teal; }
+        .business .category.real-estate { background: brown; }
+        .business .category.jobs { background: lightyellow; }
+        .business .category.commodities { background: red; }
+
+        /* Sports */
+        .sports { background: vibrantred; }
+        .sports .category:hover { background: royalblue; }
+        .sports .category.football { background: royalblue; }
+        .sports .category.basketball { background: darkpurple; }
+        .sports .category.tennis { background: lightblue; }
+        .sports .category.formula1 { background: silver; }
+        .sports .category.athletics { background: green; }
+        .sports .category.cricket { background: lightgreen; }
+        .sports .category.boxing { background: black; }
+        .sports .category.footballamerican { background: yellow; }
+
+        /* Technology & Science */
+        .tech { background: electricblue; }
+        .tech .category:hover { background: limegreen; }
+        .tech .category.ai { background: neonpurple; }
+        .tech .category.software { background: limegreen; }
+        .tech .category.gadgets { background: silver; }
+        .tech .category.space { background: darkblue; }
+        .tech .category.cybersecurity { background: darkred; }
+        .tech .category.climate { background: forestgreen; }
+        .tech .category.health { background: lightblue; }
+
+        /* Entertainment */
+        .entertainment { background: purple; }
+        .entertainment .category:hover { background: neonpink; }
+        .entertainment .category.movies { background: gold; }
+        .entertainment .category.music { background: neonpink; }
+        .entertainment .category.celebrity { background: coral; }
+        .entertainment .category.awards { background: platinum; }
+        .entertainment .category.streaming { background: darkgray; }
+
+        /* Health */
+        .health { background: softgreen; }
+        .health .category:hover { background: lightyellow; }
+        .health .category.research { background: lightyellow; }
+        .health .category.fitness { background: blue; }
+        .health .category.mental { background: lavender; }
+        .health .category.diseases { background: red; }
+        .health .category.healthcare { background: aqua; }
+
+        /* Weather */
+        .weather { background: skyblue; }
+        .weather .category:hover { background: darkteal; }
+        .weather .category.hurricanes { background: darkteal; }
+        .weather .category.earthquakes { background: charcoalgray; }
+        .weather .category.climate { background: forestgreen; }
+        
+        /* Icons */
+        .icon { margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Global News</h1>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </header>
+    <div class="container">
+        <h2>Categories</h2>
+        <div id="categories">
+            <div class="politics">
+                <span class="category" onclick="toggleSubCategories('politics')"><i class="fas fa-globe icon"></i>Politics & Governance</span>
+                <div id="politics-subcategories" class="sub-category">
+                    <span class="category global" onclick="fetchNews('global-politics')">Global Politics</span>
+                    <span class="category regional" onclick="fetchNews('regional-politics')">Regional Politics</span>
+                    <span class="category national" onclick="fetchNews('national-politics')">National Politics</span>
+                    <span class="category leaders" onclick="fetchNews('political-leaders')">Political Leaders</span>
+                    <span class="category parties" onclick="fetchNews('political-parties')">Political Parties & Movements</span>
+                </div>
+            </div>
+
+            <div class="business">
+                <span class="category" onclick="toggleSubCategories('business')"><i class="fas fa-briefcase icon"></i>Business & Economy</span>
+                <div id="business-subcategories" class="sub-category">
+                    <span class="category economy" onclick="fetchNews('global-economy')">Global Economy</span>
+                    <span class="category stock" onclick="fetchNews('stock-markets')">Stock Markets & Trading</span>
+                    <span class="category corporate" onclick="fetchNews('corporate-news')">Corporate News</span>
+                    <span class="category startups" onclick="fetchNews('entrepreneurship')">Entrepreneurship & Startups</span>
+                    <span class="category real-estate" onclick="fetchNews('real-estate')">Real Estate & Housing</span>
+                    <span class="category jobs" onclick="fetchNews('employment-jobs')">Employment & Jobs Market</span>
+                    <span class="category commodities" onclick="fetchNews('commodities-trade')">Commodities & Trade</span>
+                </div>
+            </div>
+
+            <div class="sports">
+                <span class="category" onclick="toggleSubCategories('sports')"><i class="fas fa-football-ball icon"></i>Sports</span>
+                <div id="sports-subcategories" class="sub-category">
+                    <span class="category football" onclick="fetchNews('football')">Football</span>
+                    <span class="category basketball" onclick="fetchNews('basketball')">Basketball</span>
+                    <span class="category tennis" onclick="fetchNews('tennis')">Tennis</span>
+                    <span class="category formula1" onclick="fetchNews('formula-1')">Formula 1</span>
+                    <span class="category athletics" onclick="fetchNews('athletics')">Athletics</span>
+                    <span class="category cricket" onclick="fetchNews('cricket')">Cricket</span>
+                    <span class="category boxing" onclick="fetchNews('boxing-ufc')">Boxing & UFC</span>
+                    <span class="category footballamerican" onclick="fetchNews('american-football')">American Football</span>
+                </div>
+            </div>
+
+            <!-- Other categories follow the same pattern -->
+
+        </div>
+
+        <h2>Latest News</h2>
+        <div id="news-container"></div>
+
+        <div id="comment-section">
+            <h2>Comments</h2>
+            <textarea id="comment-input" placeholder="Write a comment..."></textarea>
+            <button onclick="postComment()">Post Comment</button>
+            <div id="comments"></div>
